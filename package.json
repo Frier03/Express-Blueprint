@@ -1,0 +1,35 @@
+{
+  "name": "express-blueprint",
+  "version": "1.0.0",
+  "description": "A solid starting point for building a backend server in Node.js using the popular Express framework. This blueprint includes essential features such as routing, middleware, error handling, and configuration setup, providing you with a strong foundation for your project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frier03/Express-Blueprint.git"
+  },
+  "keywords": [
+    "express",
+    "node.js",
+    "backend",
+    "server",
+    "api",
+    "rest",
+    "starter kit",
+    "template",
+    "web development",
+    "javascript"
+  ],
+  "author": "https://github.com/Frier03",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Frier03/Express-Blueprint/issues"
+  },
+  "homepage": "https://github.com/Frier03/Express-Blueprint#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
