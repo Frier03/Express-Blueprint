@@ -33,7 +33,8 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "dotenv": "^16.0.3",
