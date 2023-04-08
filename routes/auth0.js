@@ -1,5 +1,6 @@
 const express = require('express')
 
+const config = require('../config.json')
 const jwt = require('../utils/jwt')
 const { validateInput } = require('../middlewares/inputValidation')
 const router = express.Router()
@@ -16,7 +17,7 @@ router.post('/login', validateInput(['username', 'password']), (req, res) => {
   
     // Send the JWT in the Authorization header
     res.set('Authorization', `Bearer ${token}`);
-    res.set('WWW-Authenticate', 'Bearer realm="Express-Blueprint"'); // Indicate the authenticate scheme used by the server
+    res.set('WWW-Authenticate', `Bearer realm="${config.Issuer}"`); // Indicate the authenticate scheme used by the server
     res.status(200).send();
   });
 
