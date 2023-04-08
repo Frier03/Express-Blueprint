@@ -14,6 +14,4 @@ function createToken(payload, options = {}) {
     return token;
   }
 
-module.exports = {
-    createToken
-}
+module.exports = { createToken }
