@@ -14,17 +14,6 @@ function createToken(payload, options = {}) {
     return token;
   }
 
-// Function to verify and decode JWT token
-function verifyToken(token) {
-    try {
-        const decoded = jwt.verify(token, JWT_SECRET_KEY)
-        return decoded;
-    } catch(err) {
-        return null; // Invalid token
-    }
-}
-
 module.exports = {
-    createToken,
-    verifyToken
+    createToken
 }
