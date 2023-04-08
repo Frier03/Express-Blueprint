@@ -21,6 +21,8 @@ router.post('/login', validateInput(['username', 'password']), (req, res) => {
     // Send the JWT in the Authorization header
     res.set('Authorization', `Bearer ${token}`);
     res.set('WWW-Authenticate', `Bearer realm="${config.Issuer}"`); // Indicate the authenticate scheme used by the server
+
+    logger.debug(`Sending token to ${username}`, { action: 'Sending token'})
     res.status(200).send();
   });
 
