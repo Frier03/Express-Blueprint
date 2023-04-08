@@ -1,0 +1,7 @@
+POST http://localhost:8888/api/auth0/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "123"
+}

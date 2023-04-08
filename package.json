@@ -30,6 +30,11 @@
   },
   "homepage": "https://github.com/Frier03/Express-Blueprint#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-validator": "^6.15.0",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
   }
 }
