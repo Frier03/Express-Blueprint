@@ -11,5 +11,5 @@ app.use(errorHandler)
 
 
 app.listen(8888, () => {
-    logger.info(`Server started listening`, { port: 8888 })
+    logger.info(`Server started listening`, { port: 8888, action: 'Started server' })
 })
