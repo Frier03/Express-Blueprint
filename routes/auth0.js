@@ -9,7 +9,7 @@ router.post('/login', validateInput(['username', 'password']), (req, res) => {
     const { username, password } = req.body;
     // Check if the username and password are valid
     // ...
-  
+
     // If valid, create and sign a JWT
     const payload = { 'sub': username };
     const options = { expiresIn: '2h' };
