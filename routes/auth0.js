@@ -1,6 +1,7 @@
 const express = require('express')
 
 const config = require('../config.json')
+const logger = require('../utils/logger')
 const jwt = require('../utils/jwt')
 const { validateInput } = require('../middlewares/inputValidation')
 const router = express.Router()
@@ -14,7 +15,9 @@ router.post('/login', validateInput(['username', 'password']), (req, res) => {
     const payload = { 'sub': username };
     const options = { expiresIn: '2h' };
     const token = jwt.createToken(payload, options);
-  
+    
+    logger.debug(`Signing token for ${username}`, { ...options, action: 'Signing token'})
+
     // Send the JWT in the Authorization header
     res.set('Authorization', `Bearer ${token}`);
     res.set('WWW-Authenticate', `Bearer realm="${config.Issuer}"`); // Indicate the authenticate scheme used by the server

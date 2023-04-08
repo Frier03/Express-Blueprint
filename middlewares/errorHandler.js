@@ -1,5 +1,10 @@
+const logger = require('../utils/logger')
+
 function errorHandler(err, req, res, next) {
-    res.status(400).send(err.message)
+  const statusCode = err.statusCode || 500; // default if no status code provided
+
+  logger.error(`Error occured with status code ${statusCode}`, { ...err, action: 'Error'})
+  res.status(statusCode).send(err.message)
   }
   
   module.exports = { errorHandler };
