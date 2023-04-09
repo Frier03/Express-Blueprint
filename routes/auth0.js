@@ -6,10 +6,8 @@ const jwt = require('../utils/jwt')
 const { validateInput } = require('../middlewares/inputValidation')
 const router = express.Router()
 
-router.post('/login', validateInput(['username', 'password']), (req, res) => {
+router.post('/login', (req, res) => {
     const { username, password } = req.body;
-    // Check if the username and password are valid
-    // ...
 
     // If valid, create and sign a JWT
     const payload = { 'sub': username };
@@ -24,6 +22,8 @@ router.post('/login', validateInput(['username', 'password']), (req, res) => {
 
     logger.debug(`Sending token to ${username}`, { action: 'Sending token'})
     res.status(200).send();
+
+    logger.debug(`User ${username} has logged in`, { action: 'Logged in'})
   });
 
 router.post('/signup', (req, res) => {
