@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../config.json')
 require('dotenv').config()
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "something if key not found in .env"
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "defaultkey"
 
 // Function to create and sign JWT token
 function createToken(payload, options = {}) {
