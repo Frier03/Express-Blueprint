@@ -17,15 +17,14 @@ router.post('/login', (req, res) => {
 
     // Send the JWT in the Authorization header
     res.set('Authorization', `Bearer ${token}`);
-    res.set('WWW-Authenticate', `Bearer realm="${config.Issuer}"`); // Indicate the authenticate scheme used by the server
+    res.set('WWW-Authenticate', `Bearer realm="${config.issuer}"`); // Indicate the authenticate scheme used by the server
 
     res.status(200).send();
     logger.debug(`User ${username} has logged in`, { action: 'Logged in'})
   });
 
-router.post('/signup', (req, res) => {
-    // Handle login logic here
-    res.status(200).send("Hello")
+router.post('/register', (req, res) => {
+
 })
 
 module.exports = router
