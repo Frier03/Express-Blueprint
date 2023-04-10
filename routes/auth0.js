@@ -3,13 +3,12 @@ const express = require('express')
 const config = require('../config.json')
 const logger = require('../utils/logger')
 const jwt = require('../utils/jwt')
-const { validateInput } = require('../middlewares/inputValidation')
 const router = express.Router()
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    // If valid, create and sign a JWT
+    // Create and sign a JWT
     const payload = { 'sub': username };
     const options = { expiresIn: '2h' };
     const token = jwt.createToken(payload, options);
@@ -20,9 +19,7 @@ router.post('/login', (req, res) => {
     res.set('Authorization', `Bearer ${token}`);
     res.set('WWW-Authenticate', `Bearer realm="${config.Issuer}"`); // Indicate the authenticate scheme used by the server
 
-    logger.debug(`Sending token to ${username}`, { action: 'Sending token'})
     res.status(200).send();
-
     logger.debug(`User ${username} has logged in`, { action: 'Logged in'})
   });
 
