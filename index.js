@@ -6,14 +6,16 @@ const { errorHandler } = require('./middlewares/errorHandler')
 const { authMiddleware } = require('./middlewares/authMiddleware')
 const { validateInput } = require('./middlewares/inputValidation')
 const authRouter = require('./routes/auth0')
+const auth2faRouter = require('./routes/auth2fa')
 
 const app = express()
 const pool = db.getConnection()
-console.log(pool)
 
 app.use(express.json());
-app.use('/api/auth0/login', validateInput(['username', 'password']), authMiddleware)
-app.use('/api/auth0/', authRouter)
+
+app.use('/api/0auth/login', validateInput(['username', 'password']), authMiddleware)
+app.use('/api/0auth/', authRouter)
+app.use('/api/0auth2/', auth2faRouter)
 
 app.use(errorHandler)
 
