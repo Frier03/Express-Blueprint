@@ -5,3 +5,14 @@ Content-Type: application/json
     "username": "admin",
     "password": "123"
 }
+
+###
+
+POST http://localhost:8888/api/auth0/register
+Content-Type: application/json
+
+{
+    "mail": "admin@noresply.github.com",
+    "username": "admin",
+    "password": "123"
+}
