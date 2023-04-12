@@ -1,14 +1,26 @@
 const express = require('express')
-const logger = require('./utils/logger')
+
 const { errorHandler } = require('./middlewares/errorHandler')
 const { authMiddleware } = require('./middlewares/authMiddleware')
 const { validateInput } = require('./middlewares/inputValidation')
 const authRouter = require('./routes/auth0')
+const logger = require('./utils/logger')
+const { connect, runSql } = require('./utils/database')
+
+// Connect to the database
+connect()
+
+// Run SQL command to create the users table if not exists
+runSql('create-users-table.sql')
+    .catch((err) => {
+        console.error(`Error creating users table: ${err.message}`)
+})
 
 const app = express()
 
 app.use(express.json());
 app.use('/api/auth0/login', validateInput(['username', 'password']), authMiddleware)
+app.use('/api/auth0/register', validateInput(['mail', 'username', 'password']))
 app.use('/api/auth0/', authRouter)
 
 app.use(errorHandler)
