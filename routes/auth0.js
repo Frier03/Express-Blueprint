@@ -6,6 +6,7 @@ const config = require('../config.json')
 const logger = require('../utils/logger')
 const jwt = require('../utils/jwt')
 const { runSql } = require('../utils/database')
+const { hashPassword } = require('../utils/password')
 const router = express.Router()
 
 router.post('/login', (req, res) => {
@@ -33,7 +34,7 @@ router.post('/register', async(req, res) => {
   const userid = uuid.v4();
 
   // Hash the user's password using bcrypt
-  const passwordHash = await bcrypt.hash(password, 10) 
+  const passwordHash = await hashPassword(password) 
 
   // Register user in sql
   runSql('register-user.sql', [userid, username, mail, passwordHash])
