@@ -17,6 +17,12 @@ runSql('create-users-table.sql')
         console.error(`Error creating users table: ${err.message}`)
 })
 
+// Run SQL command to create the token blacklist table if not exists
+runSql('create-token-blacklist-table.sql')
+    .catch((err) => {
+        console.error(`Error creating token blacklist table: ${err.message}`)
+})
+
 const app = express()
 
 app.use(express.json());

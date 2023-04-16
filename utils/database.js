@@ -21,11 +21,10 @@ function runSql(sqlFileName, params = []) {
     const sqlFilePath = path.join(config.sql.sql_directory, sqlFileName)
     const sql = fs.readFileSync(sqlFilePath, 'utf8')
   
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       db.get(sql, params, function(err, row) {
         if (err) {
           logger.error(`Unable to execute SQL command '${sqlFileName}' | Error '${err.message}'.`)
-          reject(err);
         } else {
           logger.debug(`SQL command '${sqlFileName}' executed successfully.`);
           resolve(row);
