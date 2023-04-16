@@ -1,8 +1,6 @@
 const express = require('express');
 const uuid = require('uuid');
-const bcrypt = require('bcrypt');
 
-const config = require('../config.json');
 const logger = require('../utils/logger');
 const jwt = require('../utils/jwt');
 const { runSql } = require('../utils/database');
@@ -11,10 +9,11 @@ const { hashPassword } = require('../utils/password');
 const router = express.Router();
 
 router.post('/login', (req, res) => {
-  const { username } = req.body;
+  const username = req.user.name
+  const userId = req.user.id
 
   // Create and sign a JWT
-  const payload = { 'sub': username };
+  const payload = { 'sub': username, 'subId': userId };
   const options = { expiresIn: '2h' };
   const token = jwt.createToken(payload, options);
 
@@ -23,8 +22,8 @@ router.post('/login', (req, res) => {
   // Send the JWT in the Authorization header
   res.set('Authorization', `Bearer ${token}`);
 
-  logger.info(`User ${username} logged in successfully`, { action: 'Logged in' });
-  res.status(200).send();
+  logger.info(`User ${username} logged in successfully (ID: ${userId})`, { action: 'Logged in' });
+  res.status(200).json({ userId: userId })
 });
 
 router.post('/register', async (req, res) => {
@@ -53,9 +52,19 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/logout', async (req, res) => {
-  // TODO: Implement logout functionality
-  logger.debug('Logout endpoint called', { action: 'Logout' });
-  res.status(200).json({ message: 'Logout successful' });
+  const username = req.user.name
+  const userId = req.user.id
+  const token = req.user.token
+
+  try {
+    // Invalidate/blacklist the token by registering it to the blacklist
+    await runSql('register-blacklisted-token.sql', [token]);
+
+    logger.info(`User ${username} (ID: ${userId}) logged out successfully`, { action: 'Logged out' });
+    return res.status(200).json({ message: 'Logout successful' });
+  } catch(err){
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 module.exports = router;
