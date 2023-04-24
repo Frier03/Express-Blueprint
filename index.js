@@ -4,9 +4,11 @@ const { errorHandler } = require('./middlewares/errorHandler')
 const { authMiddleware } = require('./middlewares/authMiddleware')
 const { authzMiddleware } = require('./middlewares/authzMiddleware')
 const { validateInput } = require('./middlewares/inputValidation')
-const authRouter = require('./routes/auth0')
-const logger = require('./utils/logger')
 const { connect, runSql } = require('./utils/database')
+const logger = require('./utils/logger')
+
+const auth0Router = require('./routes/auth0')
+const usersRouter = require('./routes/users')
 
 // Connect to the database
 connect()
@@ -26,10 +28,14 @@ runSql('create-token-blacklist-table.sql')
 const app = express()
 
 app.use(express.json());
+
 app.use('/api/auth0/login', validateInput(['username', 'password']), authMiddleware)
 app.use('/api/auth0/register', validateInput(['mail', 'username', 'password']))
 app.use('/api/auth0/logout', authzMiddleware)
-app.use('/api/auth0/', authRouter)
+app.use('/api/auth0/', auth0Router)
+
+app.use('/api/users/:uuid', validateInput(['uuid']), authzMiddleware)
+app.use('/api/users', usersRouter)
 
 app.use(errorHandler)
 
